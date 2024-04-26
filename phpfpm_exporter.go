@@ -227,18 +227,18 @@ func CollectMetricsFromScript(socketPaths []*SocketPath, connectTimeout time.Dur
 }
 
 type PhpfpmExporter struct {
-	socketPaths         []*SocketPath
-	connectTimeout      time.Duration
-	operationTimeout    time.Duration
-	statusPath          string
+	socketPaths      []*SocketPath
+	connectTimeout   time.Duration
+	operationTimeout time.Duration
+	statusPath       string
 }
 
 func NewPhpfpmExporter(socketPaths []*SocketPath, connectTimeout time.Duration, operationTimeout time.Duration, statusPath string) (*PhpfpmExporter, error) {
 	return &PhpfpmExporter{
-		socketPaths:        socketPaths,
-		connectTimeout:     connectTimeout,
-		operationTimeout:   operationTimeout,
-		statusPath:         statusPath,
+		socketPaths:      socketPaths,
+		connectTimeout:   connectTimeout,
+		operationTimeout: operationTimeout,
+		statusPath:       statusPath,
 	}, nil
 }
 
