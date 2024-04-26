@@ -227,18 +227,18 @@ func CollectMetricsFromScript(socketPaths []*SocketPath, connectTimeout time.Dur
 }
 
 type PhpfpmExporter struct {
-	socketPaths			[]*SocketPath
-	connectTimeout		time.Duration
-	operationTimeout	time.Duration
-	statusPath			string
+	socketPaths         []*SocketPath
+	connectTimeout      time.Duration
+	operationTimeout    time.Duration
+	statusPath          string
 }
 
 func NewPhpfpmExporter(socketPaths []*SocketPath, connectTimeout time.Duration, operationTimeout time.Duration, statusPath string) (*PhpfpmExporter, error) {
 	return &PhpfpmExporter{
-		socketPaths:		socketPaths,
-		connectTimeout:		connectTimeout,
+		socketPaths:        socketPaths,
+		connectTimeout:     connectTimeout,
 		operationTimeout:   operationTimeout,
-		statusPath:			statusPath,
+		statusPath:         statusPath,
 	}, nil
 }
 
@@ -294,15 +294,15 @@ func NewSocketPath(socketPath string) *SocketPath {
 
 func main() {
 	var (
-		listenAddress			= kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9253").String()
-		metricsPath				= kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
-		socketPaths				= kingpin.Flag("phpfpm.socket-paths", "Paths of the PHP-FPM sockets.").Strings()
-		socketDirectories		= kingpin.Flag("phpfpm.socket-directories", "Path(s) of the directory where PHP-FPM sockets are located.").Strings()
-		statusPath				= kingpin.Flag("phpfpm.status-path", "Path which has been configured in PHP-FPM to show status page.").Default("/status").String()
-		scriptCollectorPaths	= kingpin.Flag("phpfpm.script-collector-paths", "Paths of the PHP file whose output needs to be collected.").Strings()
+		listenAddress           = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9253").String()
+		metricsPath             = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
+		socketPaths             = kingpin.Flag("phpfpm.socket-paths", "Paths of the PHP-FPM sockets.").Strings()
+		socketDirectories       = kingpin.Flag("phpfpm.socket-directories", "Path(s) of the directory where PHP-FPM sockets are located.").Strings()
+		statusPath              = kingpin.Flag("phpfpm.status-path", "Path which has been configured in PHP-FPM to show status page.").Default("/status").String()
+		scriptCollectorPaths    = kingpin.Flag("phpfpm.script-collector-paths", "Paths of the PHP file whose output needs to be collected.").Strings()
 		socketConnectionTimeout = kingpin.Flag("phpfpm.connection-timeout", "Connection timeout for PHP-FPM sockets.").Duration()
 		socketOperationTimeout  = kingpin.Flag("phpfpm.operation-timeout", "Read/write operation timeout for PHP-FPM sockets.").Duration()
-		showVersion				= kingpin.Flag("version", "Print version information.").Bool()
+		showVersion             = kingpin.Flag("version", "Print version information.").Bool()
 	)
 
 	kingpin.CommandLine.HelpFlag.Short('h')
