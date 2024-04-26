@@ -28,12 +28,12 @@ import (
 
 	"path/filepath"
 
+	fcgiclient "github.com/kanocz/fcgi_client"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	client_model "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
 	"github.com/prometheus/common/version"
-    fcgiclient "github.com/kanocz/fcgi_client"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -160,9 +160,9 @@ func CollectStatusFromSocket(path *SocketPath, statusPath string, connectTimeout
 	}
 	defer fcgi.Close()
 
-    if operationTimeout > 0 {
-        fcgi.SetTimeout(operationTimeout)
-    }
+	if operationTimeout > 0 {
+		fcgi.SetTimeout(operationTimeout)
+	}
 
 	resp, err := fcgi.Get(env)
 	if err != nil {
@@ -183,9 +183,9 @@ func CollectMetricsFromScript(socketPaths []*SocketPath, connectTimeout time.Dur
 			}
 			defer fcgi.Close()
 
-            if operationTimeout > 0 {
-                fcgi.SetTimeout(operationTimeout)
-            }
+			if operationTimeout > 0 {
+				fcgi.SetTimeout(operationTimeout)
+			}
 
 			env := make(map[string]string)
 			env["DOCUMENT_ROOT"] = path.Dir(scriptPath)
@@ -227,18 +227,18 @@ func CollectMetricsFromScript(socketPaths []*SocketPath, connectTimeout time.Dur
 }
 
 type PhpfpmExporter struct {
-	socketPaths         []*SocketPath
-    connectTimeout      time.Duration
-	operationTimeout    time.Duration
-	statusPath          string
+	socketPaths			[]*SocketPath
+	connectTimeout		time.Duration
+	operationTimeout	time.Duration
+	statusPath			string
 }
 
 func NewPhpfpmExporter(socketPaths []*SocketPath, connectTimeout time.Duration, operationTimeout time.Duration, statusPath string) (*PhpfpmExporter, error) {
 	return &PhpfpmExporter{
-		socketPaths:        socketPaths,
-        connectTimeout:     connectTimeout,
-        operationTimeout:   operationTimeout,
-		statusPath:         statusPath,
+		socketPaths:		socketPaths,
+		connectTimeout:		connectTimeout,
+		operationTimeout:   operationTimeout,
+		statusPath:			statusPath,
 	}, nil
 }
 
@@ -294,15 +294,15 @@ func NewSocketPath(socketPath string) *SocketPath {
 
 func main() {
 	var (
-		listenAddress           = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9253").String()
-		metricsPath             = kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
-		socketPaths             = kingpin.Flag("phpfpm.socket-paths", "Paths of the PHP-FPM sockets.").Strings()
-		socketDirectories       = kingpin.Flag("phpfpm.socket-directories", "Path(s) of the directory where PHP-FPM sockets are located.").Strings()
-		statusPath              = kingpin.Flag("phpfpm.status-path", "Path which has been configured in PHP-FPM to show status page.").Default("/status").String()
-		scriptCollectorPaths    = kingpin.Flag("phpfpm.script-collector-paths", "Paths of the PHP file whose output needs to be collected.").Strings()
-        socketConnectionTimeout = kingpin.Flag("phpfpm.connection-timeout", "Connection timeout for PHP-FPM sockets.").Duration()
+		listenAddress			= kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9253").String()
+		metricsPath				= kingpin.Flag("web.telemetry-path", "Path under which to expose metrics.").Default("/metrics").String()
+		socketPaths				= kingpin.Flag("phpfpm.socket-paths", "Paths of the PHP-FPM sockets.").Strings()
+		socketDirectories		= kingpin.Flag("phpfpm.socket-directories", "Path(s) of the directory where PHP-FPM sockets are located.").Strings()
+		statusPath				= kingpin.Flag("phpfpm.status-path", "Path which has been configured in PHP-FPM to show status page.").Default("/status").String()
+		scriptCollectorPaths	= kingpin.Flag("phpfpm.script-collector-paths", "Paths of the PHP file whose output needs to be collected.").Strings()
+		socketConnectionTimeout = kingpin.Flag("phpfpm.connection-timeout", "Connection timeout for PHP-FPM sockets.").Duration()
 		socketOperationTimeout  = kingpin.Flag("phpfpm.operation-timeout", "Read/write operation timeout for PHP-FPM sockets.").Duration()
-		showVersion             = kingpin.Flag("version", "Print version information.").Bool()
+		showVersion				= kingpin.Flag("version", "Print version information.").Bool()
 	)
 
 	kingpin.CommandLine.HelpFlag.Short('h')
