@@ -99,8 +99,8 @@ var (
 		prometheus.GaugeOpts{
 			Namespace: "php",
 			Subsystem: "fpm",
-			Name:	    "state_count",
-			Help:	    "Count of PHP-FPM processes in each state.",
+			Name:      "state_count",
+			Help:      "Count of PHP-FPM processes in each state.",
 		},
 		[]string{phpfpmSocketPathLabel, "state"},
 	)
